@@ -1,0 +1,10 @@
+:host {
+  height: var(--component-height);
+  overflow-y: auto;
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+}

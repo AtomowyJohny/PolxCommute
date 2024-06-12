@@ -1,0 +1,13 @@
+.employee-list {
+  margin: 20px;
+}
+
+.employee-list select {
+  width: 200px;
+  margin-bottom: 10px;
+}
+
+.mechanik-name {
+  cursor: pointer;
+  text-decoration: underline;
+}

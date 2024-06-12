@@ -1,0 +1,4 @@
+:host {
+  height: var(--component-height);
+  overflow-y: auto
+}

@@ -1,3 +1,29 @@
-@for (mechanik of mechanicList; track $index) {
-  {{ mechanik.name }} {{ mechanik.surname }}
+@if (mechanicList) {
+  <table mat-table [dataSource]="mechanicList">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id</th>
+      <td mat-cell *matCellDef="let mechanik"> {{ mechanik.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name</th>
+      <td class="mechanik-name" mat-cell *matCellDef="let mechanik"> <span class="mechanik-name" (click)="onMechanikNameClick(mechanik.id)">{{ mechanik.name }} {{ mechanik.surname }}</span></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 }
+
+<!--<div class="employee-list">-->
+<!--  <h2>Lista pracowników</h2>-->
+
+<!--  <select [(ngModel)]="selectedToLogin" (ngModelChange)="onEmployeeSelected($event)">-->
+<!--    <option value="">Wybierz pracownika...</option>-->
+<!--    <option *ngFor="let mechanik of mechanicList" [value]="mechanik">{{ mechanik.name }}</option>-->
+<!--  </select>-->
+
+<!--  <button *ngIf="selectedToLogin" (click)="onEmployeeSelected(selectedToLogin)">Przejdź do panelu</button>-->
+<!--</div>-->
+

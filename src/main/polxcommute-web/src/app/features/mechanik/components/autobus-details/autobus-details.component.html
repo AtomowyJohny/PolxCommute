@@ -1,0 +1,37 @@
+<p>Informacje o autobusie:</p>
+
+<section class="details">
+  <div>Rok produkcji: {{ autobus?.rokProdukcji }}</div>
+  <div>Model: {{ autobus?.model }}</div>
+  <div>Moc Netto: {{ autobus?.mocNetto }}</div>
+  <div>Zasięg: {{ autobus?.przebieg }}</div>
+  <div>Przebieg: {{ autobus?.przebieg }}</div>
+  <div>Ilość miejsc: {{ autobus?.iloscMiejsc }}</div>
+
+  @if (autobusElektryczny) {
+    <div>Ilosc pakietów zasilających: {{ autobusElektryczny.iloscPakietowZasilajacych }}</div>
+    <div>Poziom naładownia: {{ autobusElektryczny.poziomNaladowania }}</div>
+  }
+
+  @if (autobusSilnikowy) {
+    <div>Ilosc koni: {{ autobusSilnikowy.iloscKoni }}</div>
+    <div>Spalanie: {{ autobusSilnikowy.spalanie }}</div>
+    <div>Pojemność zbiornika: {{ autobusSilnikowy.pojemnoscZbiornika }}</div>
+    <div>Typ paliwa: {{ autobusSilnikowy.typPaliwa }}</div>
+    <div>Ilość paliwa: {{ autobusSilnikowy.iloscPaliwa }}</div>
+  }
+
+  @if (autobusHybrydowy) {
+    <div>Ilosc pakietów zasilających: {{ autobusHybrydowy.iloscPakietowZasilajacych }}</div>
+    <div>Poziom naładownia: {{ autobusHybrydowy.poziomNaladowania }}</div>
+
+    <div>Ilosc koni: {{ autobusHybrydowy.iloscKoni }}</div>
+    <div>Spalanie: {{ autobusHybrydowy.spalanie }}</div>
+    <div>Pojemność zbiornika: {{ autobusHybrydowy.pojemnoscZbiornika }}</div>
+    <div>Typ paliwa: {{ autobusHybrydowy.typPaliwa }}</div>
+    <div>Ilość paliwa: {{ autobusHybrydowy.iloscPaliwa }}</div>
+
+    <div>Typ napędu hybrydowego: {{ autobusHybrydowy.typNapeduHybrydowego }}</div>
+    <div>Ładowanie plugIn: {{ autobusHybrydowy.typNapeduHybrydowego ? 'TAK' : 'NIE' }}</div>
+  }
+</section>

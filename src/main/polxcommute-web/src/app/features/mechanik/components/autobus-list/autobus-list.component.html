@@ -1,0 +1,5 @@
+<mat-selection-list [multiple]="false">
+    @for (autobus of autobusList; track autobus.id; let index = $index) {
+      <mat-list-option [selected]="index === 0" (click)="onAutobusSelect.emit(autobus.id)">{{autobus.model}}</mat-list-option>
+    }
+</mat-selection-list>

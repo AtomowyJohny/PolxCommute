@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -27,5 +29,13 @@ public class Mechanik {
 
     @Column(name = "Premia", nullable = false)
     private Integer premia;
+
+    @ManyToMany
+    @JoinTable(
+            name = "Mechanik_W_Autobusie",
+            joinColumns = @JoinColumn(name = "ID_Mechanika"),
+            inverseJoinColumns = @JoinColumn(name = "ID_Autobusu")
+    )
+    private Set<Autobus> autobusSet;
 
 }

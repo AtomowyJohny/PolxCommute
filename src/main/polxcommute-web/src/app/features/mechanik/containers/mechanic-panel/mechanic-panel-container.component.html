@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Zalogowany: Mechanik Id_{{ mechanikId }}</h2>
+<mat-dialog-content>
+  <div class="basic-info-container">
+    @if (mechanikDetails) {
+      <app-mechanik-details [mechanikDetails]="mechanikDetails"></app-mechanik-details>
+    }
+
+    @if (autobusDetails) {
+      <app-autobus-details [autobus]="autobusDetails"></app-autobus-details>
+    }
+
+    @if (autobusList && autobusList.length) {
+      <mat-card>
+        <app-autobus-list (onAutobusSelect)="getAutobusDetails($event)" [autobusList]="autobusList"></app-autobus-list>
+      </mat-card>
+    }
+  </div>
+
+  @if (autobusDetails) {
+    <app-autobus-panel [autobus]="autobusDetails"></app-autobus-panel>
+  }
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

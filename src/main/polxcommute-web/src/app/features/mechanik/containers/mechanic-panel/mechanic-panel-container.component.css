@@ -1,0 +1,9 @@
+:host {
+  --component-height: 200px;
+
+  .basic-info-container {
+    display: flex;
+    gap: 25px;
+    justify-content: space-between;
+  }
+}
