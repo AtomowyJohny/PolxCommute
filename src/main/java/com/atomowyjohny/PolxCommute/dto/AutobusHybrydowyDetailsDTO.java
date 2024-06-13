@@ -7,6 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AutobusHybrydowyDetailsDTO extends AutobusDetailsDTO{
+    private Long autobusElektycznyId;
+    private Long autobusSilinikowyId;
+
     private Integer iloscKoni;
     private Short spalanie;
     private Short pojemnoscZbiornika;

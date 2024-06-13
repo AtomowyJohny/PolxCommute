@@ -1,0 +1,11 @@
+@if (acumulators().length) {
+  <mat-form-field>
+    <mat-label>Wybierz Akumulator:</mat-label>
+    <mat-select [value]="acumulators()[0].id" (selectionChange)="onSelection.emit($event.value)">
+      @for (acc of acumulators(); track acc.id; let index = $index) {
+        <mat-option [value]="acc.id">{{'Akumulator'}} {{index + 1}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+}
+

@@ -2,8 +2,10 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {GetGllMechanicVehiclesResponse} from "../models/responses/get-gll-mechanic-vehicles-response";
 import {map, Observable} from "rxjs";
-import {getAllMechanicsVehiclesUrl, getBusDetailsUrl} from "../config/api-config";
+import {getAllAcc, getAllMechanicsVehiclesUrl, getBusDetailsUrl} from "../config/api-config";
 import {Autobus} from "../models/autobus";
+import {Akumulator} from "../models/akumulator";
+import {GetAllBusAccumulatorsResponse} from "../models/responses/get-all-bus-accumulators";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,10 @@ export class AutobusApiService {
 
   public getGllMechanicVehicles(idMechanik: number): Observable<Autobus[]> {
     return this.http.get<GetGllMechanicVehiclesResponse>(getAllMechanicsVehiclesUrl(idMechanik)).pipe(map(response => response.autobusList));
+  }
+
+  public getAllAccumulators(busId: number): Observable<Akumulator[]>{
+    return this.http.get<GetAllBusAccumulatorsResponse>(getAllAcc(busId)).pipe(map(res => res.acumulators));
   }
 
   public getBusDetailsById(busId: number): Observable<Autobus> {

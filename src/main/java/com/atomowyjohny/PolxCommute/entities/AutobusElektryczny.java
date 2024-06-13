@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -26,5 +29,12 @@ public class AutobusElektryczny {
 
     @OneToOne(mappedBy = "autobusElektryczny")
     private AutobusHybrydowy autobusHybrydowy;
+
+    @ManyToMany
+    @JoinTable(name = "Akumulatory_Autobusu",
+            joinColumns = @JoinColumn(name = "ID_Autobusu_Elektryczny"),
+            inverseJoinColumns = @JoinColumn(name = "ID_Akumulatora"))
+    private Set<Akumulator> akumulators = new LinkedHashSet<>();
+
 
 }

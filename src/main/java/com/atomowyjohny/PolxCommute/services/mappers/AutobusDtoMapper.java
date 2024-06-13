@@ -55,6 +55,9 @@ public class AutobusDtoMapper {
         final AutobusElektryczny autobusElektryczny = autobusHybrydowy.getAutobusElektryczny();
         final AutobusSilnikowy autobusSilnikowy = autobusHybrydowy.getAutobusSilnikowy();
 
+        detailsDTO.setAutobusSilinikowyId(autobusSilnikowy.getId());
+        detailsDTO.setAutobusElektycznyId(autobusElektryczny.getId());
+
         detailsDTO.setAutobusType(AutobusType.HYBRYDOWY);
         detailsDTO.setSpalanie(autobusSilnikowy.getSpalanie());
         detailsDTO.setIloscKoni(autobusSilnikowy.getIloscKoni());

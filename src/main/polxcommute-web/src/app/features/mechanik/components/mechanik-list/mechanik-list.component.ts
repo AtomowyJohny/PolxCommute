@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {MechanikApiService} from "../../../../api/services/mechanik-api.service";
 import {Mechanik} from "../../../../api/models/mechanik";
 import {first} from "rxjs";
@@ -18,11 +18,15 @@ import {MechanicPanelContainerComponent} from "../../containers/mechanic-panel/m
     FormsModule,
     MatTableModule
   ],
-  templateUrl: './mechanik-list-page.component.html',
-  styleUrl: './mechanik-list-page.component.css'
+  templateUrl: './mechanik-list.component.html',
+  styleUrl: './mechanik-list.component.css'
 })
-export class MechanikListPageComponent implements OnInit {
-  protected mechanicList?: Mechanik[]
+export class MechanikListComponent implements OnInit {
+  @Input({required: true}) public mechanicList: Mechanik[] = [];
+  @Output() public readonly mechanikSelected: EventEmitter<number> = new EventEmitter<number>();
+
+
+  // protected mechanicList?: Mechanik[]
   protected readonly displayedColumns: string[] = ['id', 'name'];
 
   private readonly mechanicApiService: MechanikApiService = inject(MechanikApiService);
@@ -38,12 +42,13 @@ export class MechanikListPageComponent implements OnInit {
   }
 
   protected onMechanikNameClick(idMechanik: number): void {
+    this.mechanikSelected.emit(idMechanik)
+
     this.dialogService.open(MechanicPanelContainerComponent, {
       data: {
         idMechanik
       }
     })
   }
-
 
 }

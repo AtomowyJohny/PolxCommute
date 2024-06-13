@@ -1,3 +1,9 @@
+<app-select-acc (onSelection)="handleAccSelection($event)" [acumulators]="acumulators"></app-select-acc>
+
+@if(selactedAcc) {
+  <app-akumulator-details [akumulator]="selactedAcc"></app-akumulator-details>
+}
+
 @if (autobusElektryczny(); as autobusElektryczny) {
   <app-progress-bar label="Poziom naładowania" [value]="autobusElektryczny.poziomNaladowania"></app-progress-bar>
 }
@@ -8,7 +14,7 @@
 
 @if (autobusHybrydowy(); as autobusHybrydowy) {
   <div style="display: flex; flex-direction: column; gap: 10px">
-    <app-progress-bar label="Poziom naładowania" [value]="autobusHybrydowy.iloscPaliwa"></app-progress-bar>
+    <app-progress-bar label="Poziom paliwa" [value]="autobusHybrydowy.iloscPaliwa"></app-progress-bar>
   </div>
   <app-progress-bar label="Poziom naładowania" [value]="autobusHybrydowy.poziomNaladowania"></app-progress-bar>
 }

@@ -17,3 +17,7 @@ export function getAllMechanicsVehiclesUrl(id: number): string{
 export function getBusDetailsUrl(id: number): string {
   return `${BACKEND_URL}/bus/details/${id}`
 }
+
+export function getAllAcc(id: number): string{
+  return `${BACKEND_URL}/bus/acc/${id}`
+}

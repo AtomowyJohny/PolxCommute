@@ -1,0 +1,15 @@
+###
+GET http://localhost:8080/mechanic/all
+###
+GET http://localhost:8080/mechanic/1
+###
+GET http://localhost:8080/bus/acc/7
+###
+GET http://localhost:8080/bus/acc/1
+###
+GET http://localhost:8080/bus/acc/500
+
+###
+GET http://localhost:8080/bus/all
+###
+GET http://localhost:8080/bus/details/1

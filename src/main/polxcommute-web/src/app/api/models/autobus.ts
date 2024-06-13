@@ -16,7 +16,7 @@ export interface AutobusDetails {
   autobusType: AutobusType
 }
 
-export interface  AutobusElektyczny extends AutobusDetails {
+export interface AutobusElektyczny extends AutobusDetails {
   iloscPakietowZasilajacych: number;
   poziomNaladowania: number;
 }
@@ -30,6 +30,9 @@ export interface AutobusSilnikowy extends AutobusDetails {
 }
 
 export interface AutobusHybrydowy extends AutobusDetails {
+  autobusElektycznyId: number;
+  autobusSilinikowyId: number;
+
   iloscPakietowZasilajacych: number;
   poziomNaladowania: number;
 
