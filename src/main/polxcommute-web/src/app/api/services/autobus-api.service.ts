@@ -18,7 +18,7 @@ export class AutobusApiService {
     return this.http.get<GetGllMechanicVehiclesResponse>(getAllMechanicsVehiclesUrl(idMechanik)).pipe(map(response => response.autobusList));
   }
 
-  public getAllAccumulators(busId: number): Observable<Akumulator[]>{
+  public getAllAccumulators(busId: number): Observable<Akumulator[]> {
     return this.http.get<GetAllBusAccumulatorsResponse>(getAllAcc(busId)).pipe(map(res => res.acumulators));
   }
 

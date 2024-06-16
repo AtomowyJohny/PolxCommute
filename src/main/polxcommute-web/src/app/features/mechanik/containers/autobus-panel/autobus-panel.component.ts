@@ -3,10 +3,15 @@ import {Autobus, AutobusElektyczny, AutobusHybrydowy, AutobusSilnikowy} from "..
 import {AutobusType} from "../../../../enums/autobus-type";
 import {ProgressBarComponent} from "../../components/progress-bar/progress-bar.component";
 import {AutobusApiService} from "../../../../api/services/autobus-api.service";
-import {first} from "rxjs";
+import {filter, first, map, Observable, switchMap, tap} from "rxjs";
 import {Akumulator} from "../../../../api/models/akumulator";
 import {SelectAccComponent} from "../../components/select-acc/select-acc.component";
 import {AkumulatorDetailsComponent} from "../../components/akumulator-details/akumulator-details.component";
+import {MatButton} from "@angular/material/button";
+import {MatDialog} from "@angular/material/dialog";
+import {AkumulatorFormComponent} from "../../components/akumulator-form/akumulator-form.component";
+import {ChangeAkumulatorReq} from "../../../../api/models/requests/change-akumulator-req";
+import {AkumulatorFormName} from "../../components/akumulator-form/enum/akumulator-form-name";
 
 @Component({
   selector: 'app-autobus-panel',
@@ -48,7 +53,7 @@ export class AutobusPanelComponent {
     });
   }
 
-  protected handleAccSelection(acumulatorId: number): void{
+  protected handleAccSelection(acumulatorId: number): void {
     this.selactedAcc = this.acumulators.find((acc) => acc.id === acumulatorId) ?? null;
 }
 }

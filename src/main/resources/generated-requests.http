@@ -13,3 +13,14 @@ GET http://localhost:8080/bus/acc/500
 GET http://localhost:8080/bus/all
 ###
 GET http://localhost:8080/bus/details/1
+
+###
+PATCH http://localhost:8080/bus/acc
+Content-Type: application/json
+
+{
+  "idAutobusu": 1,
+  "idAkumulatoraDoWymiany": 1,
+  "pojemnosc": 5000,
+  "znamionowaIloscCykli": 500
+}

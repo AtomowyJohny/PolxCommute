@@ -1,12 +1,12 @@
 package com.atomowyjohny.PolxCommute.services;
 
+import com.atomowyjohny.PolxCommute.controllers.Requests.ChangeAkumulatorReq;
 import com.atomowyjohny.PolxCommute.dto.AkumulatorDTO;
 import com.atomowyjohny.PolxCommute.dto.AutobusDTO;
 import com.atomowyjohny.PolxCommute.entities.Autobus;
 import com.atomowyjohny.PolxCommute.entities.AutobusElektryczny;
 import com.atomowyjohny.PolxCommute.entities.Mechanik;
-import com.atomowyjohny.PolxCommute.repository.AutobusElektrycznyRepository;
-import com.atomowyjohny.PolxCommute.repository.AutobusHybrydowyRepository;
+import com.atomowyjohny.PolxCommute.repository.AkumulatorRepository;
 import com.atomowyjohny.PolxCommute.repository.AutobusRepository;
 import com.atomowyjohny.PolxCommute.repository.MechanikRepository;
 import com.atomowyjohny.PolxCommute.services.mappers.AkumulatorDtoMapper;
@@ -26,17 +26,15 @@ import java.util.stream.Collectors;
 @Service
 public class AutobusService {
 
+    private static final Short NEW_ACUMULATOR_POZIOM_NALADOWANIA = 80;
     private final MechanikRepository mechanikRepository;
     private final AutobusRepository autobusRepository;
-    private final AutobusElektrycznyRepository autobusElektrycznyRepository;
-    private final AutobusHybrydowyRepository autobusHybrydowyRepository;
+    private final AkumulatorRepository akumulatorRepository;
 
-
-    public AutobusService(final AutobusRepository autobusRepository, final MechanikRepository mechanikRepository, final AutobusElektrycznyRepository autobusElektrycznyRepository, final AutobusHybrydowyRepository autobusHybrydowyRepository) {
+    public AutobusService(final AutobusRepository autobusRepository, final MechanikRepository mechanikRepository, AkumulatorRepository akumulatorRepository) {
         this.autobusRepository = autobusRepository;
         this.mechanikRepository = mechanikRepository;
-        this.autobusElektrycznyRepository = autobusElektrycznyRepository;
-        this.autobusHybrydowyRepository = autobusHybrydowyRepository;
+        this.akumulatorRepository = akumulatorRepository;
     }
 
     public List<AutobusDTO> getAll(Long mechanikID) {
@@ -59,6 +57,39 @@ public class AutobusService {
         if (autobus.isPresent() && Objects.nonNull(autobus.get().getAutobusElektryczny())) {
             final AutobusElektryczny autobusElektryczny = autobus.get().getAutobusElektryczny();
             return autobusElektryczny.getAkumulators().stream().map(AkumulatorDtoMapper::map).collect(Collectors.toSet());
+        } else {
+            log.info("Autobus nie został znaleziony");
+            throw new HttpClientErrorException(HttpStatusCode.valueOf(404));
+        }
+    }
+
+    @Transactional
+    public void changeAutobusAkumulator(ChangeAkumulatorReq req) throws HttpClientErrorException {
+        final Optional<Autobus> autobus = autobusRepository.findById(req.getIdAutobusu());
+        if (autobus.isPresent()) {
+            final AutobusElektryczny autobusElektryczny = autobus.get().getAutobusElektryczny();
+            final Optional<Akumulator> akumulatorToRemove = akumulatorRepository.findById(req.getIdAkumulatoraDoWymiany());
+            if (Objects.nonNull(autobusElektryczny) && akumulatorToRemove.isPresent()) {
+                final Set<Akumulator> akumulatorSet = autobusElektryczny.getAkumulators();
+                akumulatorSet.remove(akumulatorToRemove.get());
+
+                final Akumulator nowyAkumulator = new Akumulator();
+                nowyAkumulator.setPojemnosc(req.getPojemnosc());
+                nowyAkumulator.setZnamionowaIloscCykli(req.getZnamionowaIloscCykli());
+                nowyAkumulator.setPoziomNaladowania(NEW_ACUMULATOR_POZIOM_NALADOWANIA);
+                nowyAkumulator.setIloscCykliRozladowania(0);
+                akumulatorRepository.saveAndFlush(nowyAkumulator);
+
+                akumulatorSet.add(nowyAkumulator);
+                autobusElektryczny.setAkumulators(akumulatorSet);
+
+                final Autobus autobusToSave = autobus.get();
+                autobusToSave.setAutobusElektryczny(autobusElektryczny);
+                autobusRepository.saveAndFlush(autobusToSave);
+
+            } else {
+                throw new HttpClientErrorException(HttpStatusCode.valueOf(404));
+            }
         } else {
             log.info("Autobus nie został znaleziony");
             throw new HttpClientErrorException(HttpStatusCode.valueOf(404));
