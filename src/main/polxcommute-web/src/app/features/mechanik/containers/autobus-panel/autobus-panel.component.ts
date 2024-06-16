@@ -19,7 +19,8 @@ import {AkumulatorFormName} from "../../components/akumulator-form/enum/akumulat
   imports: [
     ProgressBarComponent,
     SelectAccComponent,
-    AkumulatorDetailsComponent
+    AkumulatorDetailsComponent,
+    MatButton
   ],
   templateUrl: './autobus-panel.component.html',
   styleUrl: './autobus-panel.component.css'
@@ -43,17 +44,46 @@ export class AutobusPanelComponent {
     return this.autobus().details?.autobusType === AutobusType.ELEKTRYCZNY ? this.autobus().details as AutobusElektyczny : null;
   })
 
-  public constructor(private readonly autobusApiService: AutobusApiService) {
+  public constructor(private readonly autobusApiService: AutobusApiService,
+                     private readonly matDialog: MatDialog) {
     effect(() => {
       this.acumulators = [];
       this.selactedAcc = null;
-      this.autobusApiService.getAllAccumulators(this.autobus().id).pipe(first()).subscribe({
-        next: aukumulators => this.acumulators = aukumulators
-      })
+      this.getAllAcumulators().subscribe()
     });
   }
 
   protected handleAccSelection(acumulatorId: number): void {
     this.selactedAcc = this.acumulators.find((acc) => acc.id === acumulatorId) ?? null;
-}
+  }
+
+  protected handleAkumulatorChange(): void {
+    console.log(this.autobus().id);
+    this.matDialog.open(AkumulatorFormComponent, {
+      disableClose: true
+    }).afterClosed().pipe(
+      first(),
+      filter(result => !!result),
+      map(this._mapFormResultToChangeRequest),
+      switchMap(request => this.autobusApiService.changeAutobusAkumulator(request).pipe(first())),
+      switchMap(() => this.getAllAcumulators())).subscribe();
+  }
+
+  private getAllAcumulators(): Observable<Akumulator[]> {
+    return this.autobusApiService.getAllAccumulators(this.autobus().id).pipe(first(), tap({
+      next: aukumulators => this.acumulators = aukumulators
+    }));
+  }
+
+  private _mapFormResultToChangeRequest(formResult: {
+    [AkumulatorFormName.ZNAMIONOWA_ILOSC_CYKLI]: number,
+    [AkumulatorFormName.POJEMNOSC]: number
+  }): ChangeAkumulatorReq {
+    return {
+      pojemnosc: formResult[AkumulatorFormName.POJEMNOSC],
+      znamionowaIloscCykli: formResult[AkumulatorFormName.ZNAMIONOWA_ILOSC_CYKLI],
+      idAutobusu: this.autobus().id,
+      idAkumulatoraDoWymiany: this.selactedAcc!.id
+    }
+  }
 }

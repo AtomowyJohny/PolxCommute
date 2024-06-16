@@ -1,15 +1,13 @@
 package com.atomowyjohny.PolxCommute.controllers;
 
+import com.atomowyjohny.PolxCommute.controllers.Requests.ChangeAkumulatorReq;
 import com.atomowyjohny.PolxCommute.controllers.Responses.GetAcumulatorsResponse;
 import com.atomowyjohny.PolxCommute.controllers.Responses.GetAllAutobusRes;
 import com.atomowyjohny.PolxCommute.dto.AutobusDTO;
 import com.atomowyjohny.PolxCommute.services.AutobusService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Optional;
@@ -50,5 +48,10 @@ public class AutobusController {
         } catch (HttpClientErrorException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PatchMapping("/acc")
+    public void changeAkumulator(@RequestBody ChangeAkumulatorReq req) {
+        autobusService.changeAutobusAkumulator(req);
     }
 }

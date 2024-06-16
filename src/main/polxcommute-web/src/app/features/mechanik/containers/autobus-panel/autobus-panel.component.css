@@ -1,0 +1,6 @@
+.autobus-panel {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 25px;
+  justify-content: space-between;
+}
