@@ -1,4 +1,4 @@
-package com.atomowyjohny.PolxCommute.entities;
+package com.atomowyjohny.PolxCommute.entities.generators;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;

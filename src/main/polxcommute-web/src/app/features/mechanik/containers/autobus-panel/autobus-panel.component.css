@@ -4,3 +4,9 @@
   gap: 25px;
   justify-content: space-between;
 }
+
+.action-section {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}

@@ -1,0 +1,12 @@
+@if (chargerModes().length) {
+  <mat-form-field>
+    <mat-label>Wybierz tryb ładowarki:</mat-label>
+    <mat-select #select [value]="chargerModes()[0].value">
+      @for (mode of chargerModes(); track mode.value) {
+        <mat-option [value]="mode.value">{{ mode.label }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <button (click)="onSelection.emit(select.value)" mat-button>Start</button>
+}

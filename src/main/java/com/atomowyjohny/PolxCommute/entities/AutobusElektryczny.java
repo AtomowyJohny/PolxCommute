@@ -34,7 +34,7 @@ public class AutobusElektryczny {
     @JoinTable(name = "Akumulatory_Autobusu",
             joinColumns = @JoinColumn(name = "ID_Autobusu_Elektryczny"),
             inverseJoinColumns = @JoinColumn(name = "ID_Akumulatora"))
-    private Set<Akumulator> akumulators = new LinkedHashSet<>();
+    private Set<Akumulator> akumulators;
 
 
 }

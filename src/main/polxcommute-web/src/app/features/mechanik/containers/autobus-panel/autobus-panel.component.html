@@ -6,25 +6,27 @@
       <app-akumulator-details [akumulator]="selactedAcc"></app-akumulator-details>
     }
 
-    @if (autobusElektryczny(); as autobusElektryczny) {
-      <app-progress-bar label="Poziom naładowania" [value]="autobusElektryczny.poziomNaladowania"></app-progress-bar>
+    @if (autobusElektryczny()) {
+      <app-progress-bar label="Poziom naładowania" [value]="poziomNaladowania ?? 0"></app-progress-bar>
     }
 
     @if (autobusSilnikowy(); as autobusSilnikowy) {
       <app-progress-bar label="Poziom paliwa" [value]="autobusSilnikowy.iloscPaliwa"></app-progress-bar>
     }
 
-    @if (autobusHybrydowy(); as autobusHybrydowy) {
+    @if (autobusHybrydowy()) {
       <div style="display: flex; flex-direction: column; gap: 10px">
-        <app-progress-bar label="Poziom paliwa" [value]="autobusHybrydowy.iloscPaliwa"></app-progress-bar>
+        <app-progress-bar label="Poziom paliwa" [value]="autobusHybrydowy()?.iloscPaliwa ?? 0"></app-progress-bar>
       </div>
-      <app-progress-bar label="Poziom naładowania" [value]="autobusHybrydowy.poziomNaladowania"></app-progress-bar>
+      <app-progress-bar label="Poziom naładowania" [value]="poziomNaladowania?? 0"></app-progress-bar>
     }
   </section>
 
-  <section>
+  <section class="action-section">
     @if (!autobusSilnikowy()) {
-      <button mat-button (click)="handleAkumulatorChange()">Wymiana</button>
+      <button mat-button (click)="handleAkumulatorChange()">Wymiana Akumulatora</button>
+      <mat-divider></mat-divider>
+      <app-charger-action (onSelection)="handleChargeAction($event)" [chargerModes]="chargerModes"></app-charger-action>
     }
   </section>
 </div>

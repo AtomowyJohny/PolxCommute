@@ -24,3 +24,6 @@ Content-Type: application/json
   "pojemnosc": 5000,
   "znamionowaIloscCykli": 500
 }
+
+###
+GET http://localhost:8080/charger/modes

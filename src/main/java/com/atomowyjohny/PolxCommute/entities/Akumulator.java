@@ -1,5 +1,6 @@
 package com.atomowyjohny.PolxCommute.entities;
 
+import com.atomowyjohny.PolxCommute.entities.generators.CustomIdGenerator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ import java.io.Serializable;
 public class Akumulator implements Serializable {
     @Id
     @GeneratedValue(generator = CustomIdGenerator.GENERATOR_NAME)
-    @GenericGenerator(name = CustomIdGenerator.GENERATOR_NAME, strategy = "com.atomowyjohny.PolxCommute.entities.CustomIdGenerator")
+    @GenericGenerator(name = CustomIdGenerator.GENERATOR_NAME, strategy = "com.atomowyjohny.PolxCommute.entities.generators.CustomIdGenerator")
     @Column(name = "ID_Akumulatora", nullable = false)
     private Long id;
 
